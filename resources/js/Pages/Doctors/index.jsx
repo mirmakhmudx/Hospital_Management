@@ -1,13 +1,13 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, router } from '@inertiajs/react';
-import { Users, Plus, Eye, Pencil, Trash2 } from 'lucide-react';
-// Pagination komponentini import qilamiz
+import { Stethoscope, Plus, Eye, Pencil, Trash2 } from 'lucide-react';
+// 1. Pagination komponentini import qilamiz
 import Pagination from '@/Components/Pagination';
 
-export default function Index({ patients }) {
+export default function Index({ doctors }) {
     function destroy(id) {
-        if (confirm('Bemorni o\'chirishni tasdiqlaysizmi?')) {
-            router.delete(route('patients.destroy', id));
+        if (confirm('Shifokorni o\'chirishni tasdiqlaysizmi?')) {
+            router.delete(route('doctors.destroy', id));
         }
     }
 
@@ -16,69 +16,72 @@ export default function Index({ patients }) {
             header={
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <Users size={20} className="text-gray-600" />
-                        <h2 className="text-lg font-semibold text-gray-800">Bemorlar</h2>
+                        <Stethoscope size={20} className="text-gray-600" />
+                        <h2 className="text-lg font-semibold text-gray-800">Shifokorlar</h2>
                     </div>
                     <Link
-                        href={route('patients.create')}
+                        href={route('doctors.create')}
                         className="flex items-center gap-2 bg-gray-900 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm"
                     >
                         <Plus size={16} />
-                        Bemor qo'shish
+                        Shifokor qo'shish
                     </Link>
                 </div>
             }
         >
-            <Head title="Bemorlar" />
+            <Head title="Shifokorlar" />
 
-            {/* Jadval qismi */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                 <table className="w-full text-sm">
                     <thead className="bg-gray-50 border-b border-gray-200 text-gray-500 uppercase text-xs tracking-wider">
                     <tr>
                         <th className="px-6 py-3 text-left">#</th>
                         <th className="px-6 py-3 text-left">Ism Familiya</th>
+                        <th className="px-6 py-3 text-left">Mutaxassislik</th>
                         <th className="px-6 py-3 text-left">Jins</th>
-                        <th className="px-6 py-3 text-left">Tug'ilgan sana</th>
                         <th className="px-6 py-3 text-left">Telefon</th>
                         <th className="px-6 py-3 text-left">Amallar</th>
                     </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
-                    {patients.data.length === 0 ? (
+                    {doctors.data.length === 0 ? (
                         <tr>
                             <td colSpan={6} className="px-6 py-10 text-center text-gray-400">
-                                Bemorlar mavjud emas
+                                Shifokorlar mavjud emas
                             </td>
                         </tr>
                     ) : (
-                        patients.data.map((patient) => (
-                            <tr key={patient.id} className="hover:bg-gray-50 transition-colors">
-                                <td className="px-6 py-4 text-gray-400">{patient.id}</td>
+                        doctors.data.map((doctor) => (
+                            <tr key={doctor.id} className="hover:bg-gray-50 transition-colors">
+                                <td className="px-6 py-4 text-gray-400">{doctor.id}</td>
                                 <td className="px-6 py-4 font-medium text-gray-900">
-                                    {patient.first_name} {patient.last_name}
+                                    {doctor.first_name} {doctor.last_name}
+                                </td>
+                                <td className="px-6 py-4">
+                                        <span className="bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded-full">
+                                            {doctor.specialization}
+                                        </span>
                                 </td>
                                 <td className="px-6 py-4 text-gray-600">
-                                    {patient.gender === 'male' ? 'Erkak' : 'Ayol'}
+                                    {doctor.gender === 'male' ? 'Erkak' : 'Ayol'}
                                 </td>
-                                <td className="px-6 py-4 text-gray-600">{patient.date_of_birth}</td>
-                                <td className="px-6 py-4 text-gray-600">{patient.phone}</td>
+                                <td className="px-6 py-4 text-gray-600">{doctor.phone}</td>
                                 <td className="px-6 py-4">
                                     <div className="flex items-center gap-3">
                                         <Link
-                                            href={route('patients.show', patient.id)}
+                                            href={route('doctors.show', doctor.id)}
                                             className="text-blue-600 hover:text-blue-800"
                                         >
                                             <Eye size={16} />
                                         </Link>
                                         <Link
-                                            href={route('patients.edit', patient.id)}
+                                            href={route('doctors.edit', doctor.id)}
                                             className="text-yellow-500 hover:text-yellow-700"
                                         >
                                             <Pencil size={16} />
                                         </Link>
                                         <button
-                                            onClick={() => destroy(patient.id)}
+                                            onClick={() => destroy(doctor.id)}
                                             className="text-red-500 hover:text-red-700"
                                         >
                                             <Trash2 size={16} />
@@ -92,9 +95,8 @@ export default function Index({ patients }) {
                 </table>
             </div>
 
-            {/* Pagination qismini jadvaldan tashqarida, eng tegida chiqaramiz */}
-            <div className="flex justify-center mt-4">
-                <Pagination links={patients.links} />
+            <div className="mt-6">
+                <Pagination links={doctors.links} />
             </div>
 
         </AuthenticatedLayout>

@@ -8,8 +8,10 @@ export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
 
     const navItems = [
-        { href: route('dashboard'), label: 'Dashboard', icon: LayoutDashboard, active: route().current('dashboard') },
-        { href: route('patients.index'), label: 'Bemorlar', icon: Users, active: route().current('patients.*') },
+        {href: route('dashboard'), label: 'Dashboard', icon: LayoutDashboard, active: route().current('dashboard')},
+        {href: route('patients.index'), label: 'Bemorlar', icon: Users, active: route().current('patients.*')},
+        {href: route('doctors.index'), label: 'Shifokorlar', icon: Users, active: route().current('doctors.*')},
+
     ];
     return (
         <div className="min-h-screen bg-gray-50 flex">
@@ -18,7 +20,7 @@ export default function AuthenticatedLayout({ header, children }) {
                 {/* Logo */}
                 <div className="flex items-center gap-3 px-6 py-5 border-b border-gray-100">
                     <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center">
-                        <ApplicationLogo className="block h-5 w-auto fill-current text-white" />
+                        <ApplicationLogo className="block h-5 w-auto fill-current text-white"/>
                     </div>
                     <span className="font-semibold text-gray-900 text-sm">Laravel Starter Kit</span>
                 </div>
@@ -39,7 +41,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                         : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                                 }`}
                             >
-                                <item.icon size={18} />
+                                <item.icon size={18}/>
                                 {item.label}
                             </Link>
                         ))}
@@ -50,8 +52,10 @@ export default function AuthenticatedLayout({ header, children }) {
                 <div className="px-3 py-4 border-t border-gray-100">
                     <Dropdown>
                         <Dropdown.Trigger>
-                            <button className="flex items-center gap-3 w-full px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-150">
-                                <div className="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center text-sm font-bold">
+                            <button
+                                className="flex items-center gap-3 w-full px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-150">
+                                <div
+                                    className="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center text-sm font-bold">
                                     {user.name.charAt(0).toUpperCase()}
                                 </div>
                                 <div className="flex-1 text-left">

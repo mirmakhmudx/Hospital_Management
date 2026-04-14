@@ -21,6 +21,7 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('patients', \App\Http\Controllers\PatientController::class);
     Route::resource('tasks', \App\Http\Controllers\TaskController::class);
+    Route::resource('doctors', \App\Http\Controllers\DoctorController::class);
 });
 
 Route::middleware('auth')->group(function () {
