@@ -1,17 +1,16 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import { Link, usePage } from '@inertiajs/react';
-import { LayoutDashboard, List, CheckSquare } from 'lucide-react';
+import { LayoutDashboard, Users, UserRound } from 'lucide-react';
+
 
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
 
     const navItems = [
         { href: route('dashboard'), label: 'Dashboard', icon: LayoutDashboard, active: route().current('dashboard') },
-        { href: route('lists.index'), label: 'Lists', icon: List, active: route().current('lists.*') },
-        { href: route('tasks.index'), label: 'Tasks', icon: CheckSquare, active: route().current('tasks.*') },
+        { href: route('patients.index'), label: 'Bemorlar', icon: Users, active: route().current('patients.*') },
     ];
-
     return (
         <div className="min-h-screen bg-gray-50 flex">
             {/* Sidebar */}

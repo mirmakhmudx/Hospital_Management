@@ -14,17 +14,14 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/lists', function () {
-    return Inertia::render('Lists/index');
-})->middleware(['auth', 'verified'])->name('lists.index');
-
-Route::get('/tasks', function () {
-    return Inertia::render('Tasks/index');
-})->middleware(['auth', 'verified'])->name('tasks.index');
-
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::resource('patients', \App\Http\Controllers\PatientController::class);
+    Route::resource('tasks', \App\Http\Controllers\TaskController::class);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
