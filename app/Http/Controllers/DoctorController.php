@@ -13,9 +13,7 @@ class DoctorController extends Controller
     public function index()
     {
         $doctors = Doctor::latest()->paginate(10);
-        return Inertia::render('Doctors/index', [
-            'doctors' => $doctors
-        ]);
+        return Inertia::render('Doctors/index', ['doctors' => $doctors]);
     }
 
     public function create()
@@ -30,9 +28,7 @@ class DoctorController extends Controller
 
     public function show(Doctor $doctor)
     {
-        return Inertia::render('Doctors/show', [
-            'doctor' => $doctor,
-        ]);
+        return Inertia::render('Doctors/show', ['doctor' => $doctor,]);
     }
 
 
