@@ -15,6 +15,7 @@ export default function Create() {
         phone: '',
         email: '',
         gender: '',
+        status: 'active', // Status uchun default qiymat
         bio: '',
     });
 
@@ -87,6 +88,7 @@ export default function Create() {
                         </div>
                     </div>
 
+                    {/* Status va Telefon bo'limi */}
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <label className="block text-sm text-gray-600 mb-1">Telefon</label>
@@ -100,15 +102,28 @@ export default function Create() {
                             {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
                         </div>
                         <div>
-                            <label className="block text-sm text-gray-600 mb-1">Email (ixtiyoriy)</label>
-                            <input
-                                type="email"
-                                value={data.email}
-                                onChange={e => setData('email', e.target.value)}
+                            <label className="block text-sm text-gray-600 mb-1">Status</label>
+                            <select
+                                value={data.status}
+                                onChange={e => setData('status', e.target.value)}
                                 className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
-                                placeholder="email@example.com"
-                            />
+                            >
+                                <option value="active">Faol (Active)</option>
+                                <option value="inactive">Nofaol (Inactive)</option>
+                            </select>
+                            {errors.status && <p className="text-red-500 text-xs mt-1">{errors.status}</p>}
                         </div>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm text-gray-600 mb-1">Email (ixtiyoriy)</label>
+                        <input
+                            type="email"
+                            value={data.email}
+                            onChange={e => setData('email', e.target.value)}
+                            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
+                            placeholder="email@example.com"
+                        />
                     </div>
 
                     <div>
@@ -125,14 +140,14 @@ export default function Create() {
                     <div className="flex justify-end gap-3 pt-2">
                         <Link
                             href={route('doctors.index')}
-                            className="px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50"
+                            className="px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition"
                         >
                             Bekor qilish
                         </Link>
                         <button
                             type="submit"
                             disabled={processing}
-                            className="px-4 py-2 text-sm bg-gray-900 hover:bg-gray-700 text-white rounded-lg disabled:opacity-50"
+                            className="px-4 py-2 text-sm bg-gray-900 hover:bg-gray-700 text-white rounded-lg disabled:opacity-50 transition"
                         >
                             Saqlash
                         </button>

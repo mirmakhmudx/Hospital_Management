@@ -1,7 +1,7 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import { Link, usePage } from '@inertiajs/react';
-import { LayoutDashboard, Users, UserRound } from 'lucide-react';
+import { LayoutDashboard, Users, UserRound,CalendarDays,Stethoscope,ClipboardList } from 'lucide-react';
 
 
 export default function AuthenticatedLayout({ header, children }) {
@@ -10,7 +10,9 @@ export default function AuthenticatedLayout({ header, children }) {
     const navItems = [
         {href: route('dashboard'), label: 'Dashboard', icon: LayoutDashboard, active: route().current('dashboard')},
         {href: route('patients.index'), label: 'Bemorlar', icon: Users, active: route().current('patients.*')},
-        {href: route('doctors.index'), label: 'Shifokorlar', icon: Users, active: route().current('doctors.*')},
+        {href: route('doctors.index'), label: 'Shifokorlar', icon: Stethoscope, active: route().current('doctors.*')},
+        {href: route('appointments.index'), label: 'Qabullar', icon: CalendarDays, active: route().current('appointments.*')},
+        { href: route('medical-records.index'), label: 'Tibbiy yozuvlar', icon: ClipboardList, active: route().current('medical-records.*') },
 
     ];
     return (
@@ -22,7 +24,7 @@ export default function AuthenticatedLayout({ header, children }) {
                     <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center">
                         <ApplicationLogo className="block h-5 w-auto fill-current text-white"/>
                     </div>
-                    <span className="font-semibold text-gray-900 text-sm">Laravel Starter Kit</span>
+                    <span className="font-semibold text-gray-900 text-sm">Hospital </span>
                 </div>
 
                 {/* Nav */}

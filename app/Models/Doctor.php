@@ -13,6 +13,7 @@ class Doctor extends Model
         'phone',
         'email',
         'gender',
+        'status',
         'bio',
     ];
 }

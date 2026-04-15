@@ -24,6 +24,7 @@ class DoctorRequest extends FormRequest
             'email'          => 'nullable|email',
             'gender'         => 'required|in:male,female',
             'bio'            => 'nullable|string',
+            'status' => 'required|in:active,inactive',
         ];
     }
 }

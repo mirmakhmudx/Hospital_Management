@@ -15,6 +15,7 @@ export default function Edit({ doctor }) {
         phone: doctor.phone,
         email: doctor.email ?? '',
         gender: doctor.gender,
+        status: doctor.status, // Bazadan kelgan statusni yuklaymiz
         bio: doctor.bio ?? '',
     });
 
@@ -91,15 +92,29 @@ export default function Edit({ doctor }) {
                                 className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
                             />
                         </div>
+                        {/* Status bo'limi tahrirlash uchun qo'shildi */}
                         <div>
-                            <label className="block text-sm text-gray-600 mb-1">Email</label>
-                            <input
-                                type="email"
-                                value={data.email}
-                                onChange={e => setData('email', e.target.value)}
-                                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
-                            />
+                            <label className="block text-sm text-gray-600 mb-1">Status</label>
+                            <select
+                                value={data.status}
+                                onChange={e => setData('status', e.target.value)}
+                                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 font-medium"
+                            >
+                                <option value="active" className="text-green-600 font-semibold">Faol (Active)</option>
+                                <option value="inactive" className="text-red-600 font-semibold">Nofaol (Inactive)</option>
+                            </select>
+                            {errors.status && <p className="text-red-500 text-xs mt-1">{errors.status}</p>}
                         </div>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm text-gray-600 mb-1">Email</label>
+                        <input
+                            type="email"
+                            value={data.email}
+                            onChange={e => setData('email', e.target.value)}
+                            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
+                        />
                     </div>
 
                     <div>
@@ -115,14 +130,14 @@ export default function Edit({ doctor }) {
                     <div className="flex justify-end gap-3 pt-2">
                         <Link
                             href={route('doctors.index')}
-                            className="px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50"
+                            className="px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition"
                         >
                             Bekor qilish
                         </Link>
                         <button
                             type="submit"
                             disabled={processing}
-                            className="px-4 py-2 text-sm bg-gray-900 hover:bg-gray-700 text-white rounded-lg disabled:opacity-50"
+                            className="px-4 py-2 text-sm bg-gray-900 hover:bg-gray-700 text-white rounded-lg disabled:opacity-50 transition"
                         >
                             Yangilash
                         </button>

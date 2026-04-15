@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('email')->nullable();
             $table->enum('gender', ['male', 'female']);
+            $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->text('bio')->nullable();
             $table->timestamps();
         });

@@ -21,7 +21,7 @@ export default function Index({ doctors }) {
                     </div>
                     <Link
                         href={route('doctors.create')}
-                        className="flex items-center gap-2 bg-gray-900 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm"
+                        className="flex items-center gap-2 bg-gray-900 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm transition"
                     >
                         <Plus size={16} />
                         Shifokor qo'shish
@@ -33,20 +33,21 @@ export default function Index({ doctors }) {
 
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                 <table className="w-full text-sm">
-                    <thead className="bg-gray-50 border-b border-gray-200 text-gray-500 uppercase text-xs tracking-wider">
+                    <thead className="bg-gray-50 border-b border-gray-200 text-gray-500 uppercase text-xs tracking-wider font-bold">
                     <tr>
                         <th className="px-6 py-3 text-left">#</th>
                         <th className="px-6 py-3 text-left">Ism Familiya</th>
                         <th className="px-6 py-3 text-left">Mutaxassislik</th>
                         <th className="px-6 py-3 text-left">Jins</th>
                         <th className="px-6 py-3 text-left">Telefon</th>
-                        <th className="px-6 py-3 text-left">Amallar</th>
+                        <th className="px-6 py-3 text-left">Status</th> {/* Status sarlavhasi */}
+                        <th className="px-6 py-3 text-right">Amallar</th>
                     </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
                     {doctors.data.length === 0 ? (
                         <tr>
-                            <td colSpan={6} className="px-6 py-10 text-center text-gray-400">
+                            <td colSpan={7} className="px-6 py-10 text-center text-gray-400">
                                 Shifokorlar mavjud emas
                             </td>
                         </tr>
@@ -58,7 +59,7 @@ export default function Index({ doctors }) {
                                     {doctor.first_name} {doctor.last_name}
                                 </td>
                                 <td className="px-6 py-4">
-                                        <span className="bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded-full">
+                                        <span className="bg-blue-50 text-blue-700 text-[11px] px-2 py-1 rounded-full font-medium">
                                             {doctor.specialization}
                                         </span>
                                 </td>
@@ -66,8 +67,20 @@ export default function Index({ doctors }) {
                                     {doctor.gender === 'male' ? 'Erkak' : 'Ayol'}
                                 </td>
                                 <td className="px-6 py-4 text-gray-600">{doctor.phone}</td>
+
+                                {/* Status Badge qismi */}
                                 <td className="px-6 py-4">
-                                    <div className="flex items-center gap-3">
+                                    <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-tight border ${
+                                        doctor.status === 'active'
+                                            ? 'bg-green-50 text-green-700 border-green-100'
+                                            : 'bg-red-50 text-red-700 border-red-100'
+                                    }`}>
+                                        {doctor.status === 'active' ? 'Faol' : 'Nofaol'}
+                                    </span>
+                                </td>
+
+                                <td className="px-6 py-4 text-right">
+                                    <div className="flex items-center justify-end gap-3">
                                         <Link
                                             href={route('doctors.show', doctor.id)}
                                             className="text-blue-600 hover:text-blue-800"
@@ -95,7 +108,7 @@ export default function Index({ doctors }) {
                 </table>
             </div>
 
-            <div className="mt-6">
+            <div className="mt-2">
                 <Pagination links={doctors.links} />
             </div>
 

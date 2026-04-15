@@ -22,6 +22,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('patients', \App\Http\Controllers\PatientController::class);
     Route::resource('tasks', \App\Http\Controllers\TaskController::class);
     Route::resource('doctors', \App\Http\Controllers\DoctorController::class);
+    Route::resource('appointments', \App\Http\Controllers\AppointmentController::class);
+    Route::resource('medical-records', \App\Http\Controllers\MedicalRecordController::class);
 });
 
 Route::middleware('auth')->group(function () {
