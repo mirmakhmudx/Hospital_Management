@@ -22,13 +22,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('doctors', \App\Http\Controllers\DoctorController::class);
     Route::resource('appointments', \App\Http\Controllers\AppointmentController::class);
     Route::resource('medical-records', \App\Http\Controllers\MedicalRecordController::class);
-
-    // MAXSUS marshrutlar har doim Resource'dan TEPADA bo'lishi kerak
     Route::get('bills/{bill}/pay', [\App\Http\Controllers\BillController::class, 'pay'])->name('bills.pay');
     Route::post('bills/{bill}/pay', [\App\Http\Controllers\BillController::class, 'processPayment'])->name('bills.pay.process');
-
-    // Keyin Resource
     Route::resource('bills', \App\Http\Controllers\BillController::class);
+    Route::resource('rooms', \App\Http\Controllers\RoomController::class);
+
 
 
 });

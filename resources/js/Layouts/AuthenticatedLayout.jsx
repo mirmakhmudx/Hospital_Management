@@ -1,7 +1,7 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import { Link, usePage } from '@inertiajs/react';
-import { LayoutDashboard, Users, UserRound,CalendarDays,Stethoscope,ClipboardList,ReceiptText } from 'lucide-react';
+import { LayoutDashboard, Users, UserRound,CalendarDays,Stethoscope,ClipboardList,ReceiptText , BedDouble} from 'lucide-react';
 
 
 export default function AuthenticatedLayout({ header, children }) {
@@ -14,6 +14,8 @@ export default function AuthenticatedLayout({ header, children }) {
         {href: route('appointments.index'), label: 'Qabullar', icon: CalendarDays, active: route().current('appointments.*')},
         { href: route('medical-records.index'), label: 'Tibbiy yozuvlar', icon: ClipboardList, active: route().current('medical-records.*') },
         { href: route('bills.index'),label: 'To\'lovlar',icon: ReceiptText,     active: route().current('bills.*') },
+        { href: route('rooms.index'), label: 'Xonalar', icon: BedDouble, active: route().current('rooms.*') },
+
 
     ];
     return (
