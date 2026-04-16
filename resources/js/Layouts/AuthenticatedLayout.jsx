@@ -2,7 +2,11 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import { Link, usePage } from '@inertiajs/react';
 import { LayoutDashboard, Users, UserRound,CalendarDays,Stethoscope,ClipboardList,ReceiptText , BedDouble} from 'lucide-react';
+import { router } from '@inertiajs/react';
 
+function logout() {
+    router.post(route('logout'));
+}
 
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
@@ -55,27 +59,52 @@ export default function AuthenticatedLayout({ header, children }) {
 
                 {/* User */}
                 <div className="px-3 py-4 border-t border-gray-100">
-                    <Dropdown>
-                        <Dropdown.Trigger>
-                            <button
-                                className="flex items-center gap-3 w-full px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-150">
-                                <div
-                                    className="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center text-sm font-bold">
-                                    {user.name.charAt(0).toUpperCase()}
-                                </div>
-                                <div className="flex-1 text-left">
-                                    <p className="text-sm font-medium text-gray-900">{user.name}</p>
-                                    <p className="text-xs text-gray-500">{user.email}</p>
-                                </div>
-                            </button>
-                        </Dropdown.Trigger>
-                        <Dropdown.Content>
-                            <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
-                            <Dropdown.Link href={route('logout')} method="post" as="button">
-                                Log Out
-                            </Dropdown.Link>
-                        </Dropdown.Content>
-                    </Dropdown>
+
+                    {/* USER + EMAIL CLICKABLE */}
+                    <div className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100">
+
+                        {/* LEFT: avatar + info (profile link) */}
+                        <Link
+                            href={route('profile.edit')}
+                            className="flex items-center gap-3 flex-1 min-w-0"
+                        >
+                            <div className="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center text-sm font-bold">
+                                {user.name.charAt(0).toUpperCase()}
+                            </div>
+
+                            <div className="min-w-0">
+                                <p className="text-sm font-medium text-gray-900 truncate">
+                                    {user.name}
+                                </p>
+                                <p className="text-xs text-gray-500 truncate">
+                                    {user.email}
+                                </p>
+                            </div>
+                        </Link>
+
+                        {/* RIGHT: logout icon */}
+                        <button
+                            onClick={logout}
+                            className="ml-2 text-gray-400 hover:text-red-600"
+                            title="Logout"
+                        >
+                            <svg
+                                className="w-5 h-5"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1m0-10V5"
+                                />
+                            </svg>
+                        </button>
+
+                    </div>
+
                 </div>
             </aside>
 
@@ -90,4 +119,6 @@ export default function AuthenticatedLayout({ header, children }) {
             </div>
         </div>
     );
+
+
 }

@@ -7,17 +7,12 @@ use Inertia\Inertia;
 
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+    if (auth()->check()) {return redirect()->route('dashboard');}
+    return redirect()->route('login');});
 
-Route::get('/dashboard', function() {return Inertia::render('Dashboard');})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     Route::resource('patients', \App\Http\Controllers\PatientController::class);
     Route::resource('doctors', \App\Http\Controllers\DoctorController::class);
     Route::resource('appointments', \App\Http\Controllers\AppointmentController::class);
@@ -26,8 +21,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('bills/{bill}/pay', [\App\Http\Controllers\BillController::class, 'processPayment'])->name('bills.pay.process');
     Route::resource('bills', \App\Http\Controllers\BillController::class);
     Route::resource('rooms', \App\Http\Controllers\RoomController::class);
-
-
 
 });
 
