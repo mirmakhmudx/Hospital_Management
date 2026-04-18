@@ -10,10 +10,28 @@ use Inertia\Inertia;
 
 class RoomController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $rooms = Room::latest()->paginate(10);
-        return inertia::render('Rooms/index', ['rooms' => $rooms]);
+        $query = Room::query();
+
+        if ($request->filled('search')) {
+            $query->where('room_number', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('type')) {
+            $query->where('type', $request->type);
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $rooms = $query->latest()->paginate(12)->withQueryString();
+
+        return Inertia::render('Rooms/index', [
+            'rooms'   => $rooms,
+            'filters' => $request->only(['search', 'type', 'status']),
+        ]);
     }
 
     public function create()

@@ -10,13 +10,30 @@ use App\Models\MedicalRecord;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class MedicalRecordController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $records = MedicalRecord::with('patient', 'doctor')->latest()->paginate(10);
-        return inertia('MedicalRecords/index', ['records' => $records]);
+        $query = MedicalRecord::with(['patient', 'doctor']);
+
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->whereHas('patient', function ($q2) use ($request) {
+                    $q2->where('first_name', 'like', '%' . $request->search . '%')
+                        ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                })->orWhere('diagnosis', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        $records = $query->latest()->paginate(10)->withQueryString();
+
+        return Inertia::render('MedicalRecords/index', [
+            'records' => $records,
+            'filters' => $request->only(['search']),
+        ]);
     }
 
     public function create()
@@ -60,6 +77,17 @@ class MedicalRecordController extends Controller
     {
         $medicalRecord->delete();
         return redirect()->route('medical-records.index')->with('success', 'Tibbiy yozuv o\'chirildi!');
+    }
+
+    public function downloadPdf(MedicalRecord $medicalRecord)
+    {
+        $medicalRecord->load(['patient', 'doctor']);
+
+        $pdf = Pdf::loadView('pdf.medical-record', [
+            'record' => $medicalRecord,
+        ]);
+
+        return $pdf->download('tibbiy-yozuv-' . $medicalRecord->id . '.pdf');
     }
 
 }

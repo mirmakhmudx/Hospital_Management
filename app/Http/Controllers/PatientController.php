@@ -9,15 +9,35 @@ use Inertia\Inertia;
 
 class PatientController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $patients = Patient::latest()->paginate(10);
-        return Inertia::render('Patients/index',['patients'=>$patients]);
+        $query = Patient::query();
+
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('first_name', 'like', '%' . $request->search . '%')
+                    ->orWhere('last_name', 'like', '%' . $request->search . '%')
+                    ->orWhere('phone', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        if ($request->filled('gender')) {
+            $query->where('gender', $request->gender);
+        }
+
+        $patients = $query->latest()->paginate(10)->withQueryString();
+
+        return Inertia::render('Patients/index', [
+            'patients' => $patients,
+            'filters'  => $request->only(['search', 'gender']),
+        ]);
     }
 
     public function create()
     {
+        abort_unless(auth()->user()->can('create patients'), 403);
         return Inertia::render('Patients/create');
+
     }
 
     public function store(PatientRequest $request)

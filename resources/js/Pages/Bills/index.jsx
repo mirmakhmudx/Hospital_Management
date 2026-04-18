@@ -69,8 +69,12 @@ export default function Index({ bills }) {
                                         </span>
                                 </td>
                                 <td className="px-6 py-4 text-gray-600">
-                                    {bill.due_date ?? '—'}
-                                </td>
+                                    {new Date(bill.due_date).toLocaleDateString('uz-UZ', {
+                                        year: 'numeric',
+                                        month: '2-digit',
+                                        day: '2-digit'
+                                    })}
+                                </td>ck
                                 <td className="px-6 py-4">
                                     <div className="flex items-center gap-3">
                                         {bill.status === 'unpaid' && (

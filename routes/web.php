@@ -17,6 +17,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('doctors', \App\Http\Controllers\DoctorController::class);
     Route::resource('appointments', \App\Http\Controllers\AppointmentController::class);
     Route::resource('medical-records', \App\Http\Controllers\MedicalRecordController::class);
+    Route::get('medical-records/{medicalRecord}/pdf', [\App\Http\Controllers\MedicalRecordController::class, 'downloadPdf'])->name('medical-records.pdf');
     Route::get('bills/{bill}/pay', [\App\Http\Controllers\BillController::class, 'pay'])->name('bills.pay');
     Route::post('bills/{bill}/pay', [\App\Http\Controllers\BillController::class, 'processPayment'])->name('bills.pay.process');
     Route::resource('bills', \App\Http\Controllers\BillController::class);

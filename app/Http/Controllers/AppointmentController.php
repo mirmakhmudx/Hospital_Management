@@ -12,10 +12,27 @@ use Inertia\Inertia;
 
 class AppointmentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $appointments = Appointment::with(['patient', 'doctor'])->latest()->paginate(10);
-        return Inertia::render('Appointments/index', ['appointments' => $appointments,]);
+        $query = Appointment::with(['patient', 'doctor']);
+
+        if ($request->filled('search')) {
+            $query->whereHas('patient', function ($q) use ($request) {
+                $q->where('first_name', 'like', '%' . $request->search . '%')
+                    ->orWhere('last_name', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $appointments = $query->latest()->paginate(10)->withQueryString();
+
+        return Inertia::render('Appointments/index', [
+            'appointments' => $appointments,
+            'filters'      => $request->only(['search', 'status']),
+        ]);
     }
 
     public function create()
