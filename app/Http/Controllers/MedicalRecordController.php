@@ -86,7 +86,6 @@ class MedicalRecordController extends Controller
         $pdf = Pdf::loadView('pdf.medical-record', [
             'record' => $medicalRecord,
         ]);
-
         return $pdf->download('tibbiy-yozuv-' . $medicalRecord->id . '.pdf');
     }
 
