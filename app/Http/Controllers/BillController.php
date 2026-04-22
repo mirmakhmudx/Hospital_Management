@@ -15,9 +15,7 @@ class BillController extends Controller
 {
     public function index()
     {
-        $bills = Bill::with(['patient', 'appointment'])
-            ->latest()
-            ->paginate(10);
+        $bills = Bill::with(['patient', 'appointment'])->latest()->paginate(10);
 
         return Inertia::render('Bills/index', [
             'bills' => $bills,
@@ -29,8 +27,7 @@ class BillController extends Controller
         return Inertia::render('Bills/create', [
             'patients'     => Patient::select('id', 'first_name', 'last_name')->get(),
             'appointments' => Appointment::with('patient')
-                ->whereIn('status', ['confirmed', 'completed'])
-                ->get(),
+                ->whereIn('status', ['confirmed', 'completed'])->get(),
         ]);
     }
 
