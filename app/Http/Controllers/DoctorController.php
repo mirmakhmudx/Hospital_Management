@@ -70,3 +70,4 @@ class DoctorController extends Controller
     }
 
 }
+
