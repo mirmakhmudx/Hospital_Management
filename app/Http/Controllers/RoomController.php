@@ -26,6 +26,7 @@ class RoomController extends Controller
             $query->where('status', $request->status);
         }
 
+
         $rooms = $query->latest()->paginate(12)->withQueryString();
 
         return Inertia::render('Rooms/index', [
