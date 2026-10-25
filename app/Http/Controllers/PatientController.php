@@ -21,6 +21,7 @@ class PatientController extends Controller
             });
         }
 
+
         if ($request->filled('gender')) {
             $query->where('gender', $request->gender);
         }
