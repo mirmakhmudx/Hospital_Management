@@ -22,6 +22,7 @@ class BillController extends Controller
         ]);
     }
 
+
     public function create()
     {
         return Inertia::render('Bills/create', [
