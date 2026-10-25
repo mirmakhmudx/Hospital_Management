@@ -34,6 +34,7 @@ class RoomController extends Controller
         ]);
     }
 
+
     public function create()
     {
         return inertia::render('Rooms/create');
