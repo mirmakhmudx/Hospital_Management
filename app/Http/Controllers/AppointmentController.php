@@ -23,6 +23,7 @@ class AppointmentController extends Controller
             });
         }
 
+
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
