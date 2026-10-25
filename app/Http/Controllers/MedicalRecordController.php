@@ -28,6 +28,7 @@ class MedicalRecordController extends Controller
             });
         }
 
+
         $records = $query->latest()->paginate(10)->withQueryString();
 
         return Inertia::render('MedicalRecords/index', [
